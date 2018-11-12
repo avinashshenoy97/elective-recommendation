@@ -7,7 +7,7 @@ let homeRouter = express.Router();
 
 homeRouter.get('/', (req, res) => {
 	console.log(chalk.green('GET ' + chalk.blue('/home')));
-	res.send('Heyy');
+	res.render('home.html');
 });
 
 module.exports = homeRouter;

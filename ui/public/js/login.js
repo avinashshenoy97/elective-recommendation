@@ -1,5 +1,6 @@
 function LoginController(loginService) {
     var self = this;
+
     self.loginService = loginService;
 
     self.signUpToggle = false;
@@ -8,35 +9,40 @@ function LoginController(loginService) {
     self.confirmPass = '';
 
     self.submitter = function() {
-        self.loginService.login(self.user, self.pass, self.confirmPass);
+        self.loginService.login(self.user, self.pass);
     };
 }
 
-function LoginService($http) {
+function LoginService($http, $cookies) {
     var self = this;
     self.http = $http;
+    self.cookieService = $cookies;
 
     self.authUrl = '/api/auth';
+
+    self.isAuthenticated = false;
 
     self.error = false;
     self.errorMessage = '';
 
-    self.login = function(user, pass, confirmPass) {
+    self.login = function(user, pass) {
         self.error = false;
         self.errorMessage = '';
 
-        var loginObj = {'user': user, 'pass': pass, 'isRegistration': !!confirmPass};
+        var loginObj = {'user': user, 'pass': pass};
         
         self.http.post(self.authUrl, loginObj).then(
             function success(response) {
-                if(response.data.invalid) {
+                if(response.data == 'invalid') {
                     self.error = true;
                     self.errorMessage = 'Invalid username or password!';
                 }
                 else {
                     $('form').fadeOut(500);
                     $('.wrapper').addClass('form-success');
-                    window.location.pathname = '/home';
+                    setTimeout(function() {
+                        window.location.pathname = '/home';
+                    }, 600);
                 }
             },
             function error(response) {
@@ -48,6 +54,6 @@ function LoginService($http) {
     };
 }
 
-var myApp = angular.module('myApp', [])
-    .service('LoginService', ['$http', LoginService])
-    .controller('LoginController', ['LoginService', LoginController]);
+var app = angular.module('loginApp', []);
+app.service('LoginService', ['$http', LoginService]);
+app.controller('LoginController', ['LoginService', LoginController]);
