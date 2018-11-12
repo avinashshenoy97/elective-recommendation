@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Elective Recommendation</title>
+	
+	
+	
+	<link rel="stylesheet" href="css/style.css">
+	<script  src="js/angular.js"></script>
+	
+</head>
+
+<body data-ng-app="myApp">
+	<div data-ng-controller="LoginController as loginController">
+		<div class="wrapper">
+			<div class="container">
+				<h1 data-ng-if="loginController.signUp">SIGN UP</h1>
+				<h1 data-ng-if="!loginController.signUp">LOGIN</h1>
+				
+				<form class="form-group" name="loginform" data-ng-submit="loginController.submitter()">
+					<span class="danger" data-ng-if="loginController.loginService.error">{{loginController.loginService.errorMessage}} <br/> </span>
+					<input name="user" data-ng-model="loginController.user" data-ng-required="true" type="text" placeholder="Username">
+					<input name="pass" data-ng-model="loginController.pass" data-ng-required="true" type="password" placeholder="Password">
+					<input name="confirmPass" data-ng-model="loginController.confirmPass" data-ng-if="loginController.signUp" data-ng-required="true" type="password" placeholder="Confirm Password" data-ng-class="{'invalid-match': loginController.pass != loginController.confirmPass}">
+					
+					<button name="signup" type="submit" data-ng-if="loginController.signUp" data-ng-disabled="loginController.pass != loginController.confirmPass || !loginform.pass.$valid" data-ng-class="{'disabled-btn': loginController.pass != loginController.confirmPass || !loginform.$valid}">Sign Up</button>
+					<button type="submit" data-ng-if="!loginController.signUp" data-ng-disabled="!loginform.pass.$valid" data-ng-class="{'disabled-btn': !loginform.$valid}">Login</button>
+					
+					<span class="switch-wrapper">
+						<label class="switch"><input type="checkbox" data-ng-click="loginController.signUp = !loginController.signUp">
+							<div class="slider round">
+							<span class="on"></span>
+							<span class="off"></span>
+						</div>
+						</label>
+						<span class="switch-text" data-ng-if="!loginController.signUp">Sign Up</span>
+						<span class="switch-text" data-ng-if="loginController.signUp">Login</span>
+					</span>
+				</form>
+			</div>
+			
+			<ul class="bg-bubbles">
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+		</div>
+	</div>
+	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+	
+	
+	
+	<script  src="js/index.js"></script>
+	<script src="js/myApp.js"></script>
+	
+	
+	
+</body>
+
+</html>
