@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const chalk = require('chalk');
 const path = require('path');
+const requireDir = require('require-dir');
+const routes = requireDir('./routes');
 
 let app = express();
 app.set('port', 8080);
@@ -21,6 +23,20 @@ app.set('view engine', 'html');
 app.get('/', (req, res) => {
 	console.log(chalk.green('GET ' + chalk.blue('/')));
 	res.render('index.html');
+});
+
+for (let route in routes)
+	app.use('/' + route, routes[route]);
+
+app.get('/logout', (req, res) => {
+	console.log(chalk.green('GET ' + chalk.blue('/logout')));
+	res.clearCookie('elective');
+	res.redirect('/');
+});
+
+app.use((req, res, next) => {
+	console.log(chalk.yellow('Undefined route: ' + req.method + ' ' + req.originalUrl));
+	res.status(404).render('404.html');
 });
 
 module.exports = app;
