@@ -20,8 +20,21 @@
 				<div class="textContainer">
 					<h1>Enter Subject</h1>
 					<div class="nice-wrap">
-						<input class="nice-textbox" type="text"/>
+						<input class="nice-textbox" type="text" data-ng-model="homeController.input" data-ng-change="homeController.autoCompleter()"/>
 						<label class="nice-label">Subject</label>
+					</div>
+
+					<div class="cards-container">
+						
+						<div class="card-wrapper" data-ng-repeat="item in homeController.autoCompleteList track by $index">
+							<div class="card-image">
+								
+							</div>
+							<div class="card-content">
+								<h3>{{item}}</h3>
+							</div>
+						</div>
+						
 					</div>
 				</div>
 			</div>
