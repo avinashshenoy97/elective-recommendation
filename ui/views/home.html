@@ -25,13 +25,21 @@
 					</div>
 
 					<div class="cards-container">
+						<div class="card-wrapper dark-card" data-ng-repeat="item in homeController.selectedCourses track by $index">
+							<div class="card-content" data-ng-click="homeController.unselectCourse($event, item)">
+								<h3>{{item[0]}}</h3>
+							</div>
+						</div>
+					</div>
+
+					<div class="cards-container">
 						
-						<div class="card-wrapper" data-ng-repeat="item in homeController.autoCompleteList track by $index">
+						<div class="card-wrapper" data-ng-repeat="item in homeController.autoCompleteList track by $index" data-ng-if="!item[1]">
 							<div class="card-image">
 								
 							</div>
-							<div class="card-content">
-								<h3>{{item}}</h3>
+							<div class="card-content" data-ng-click="homeController.selectCourse($event, item)">
+								<h3>{{item[0]}}</h3>
 							</div>
 						</div>
 						

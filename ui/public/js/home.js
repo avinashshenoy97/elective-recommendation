@@ -9,10 +9,14 @@ function HomeService($http) {
     self.getAutoCompleteList = function() {
         self.http.get(self.autoCompleteUrl).then(
             function success(response) {
-                self.autoCompleteList = response.data;
+                response.data.forEach(element => {
+                    self.autoCompleteList.push([element, false]);
+                });
             },
             function error(response) {
-                // self.autoCompleteList = ['abc', 'def', 'ghi']; //to test
+                // ['abc', 'def', 'ghi', 'jkl', 'mno', 'pqr', 'stu'].forEach(element => { //test
+                //     self.autoCompleteList.push([element, false]);
+                // });
                 console.log('Error fetching autocomplete list');
                 console.log(response);
             }
@@ -29,19 +33,35 @@ function HomeController(loginService, homeService) {
     self.input = '';
     self.autoCompleteList = [];
 
+    self.selectedCourses = [];
+
     self.autoCompleter = function() {
         self.autoCompleteList = [];
 
-        if(self.input.length == 0) {
-            return;
-        }
+        // if(self.input.length == 0) {
+        //     return;
+        // }
 
         self.homeService.autoCompleteList.forEach(element => {
-            if(element.match(self.input)) {
+            if(element[0].match(self.input)) {
                 self.autoCompleteList.push(element);
             }
         });
     };
+
+    self.selectCourse = function($event, item) {
+        item[1] = true;
+        self.selectedCourses.push(item);
+    };
+
+    self.unselectCourse = function($event, item) {
+        item[1] = false;
+        self.selectedCourses = self.selectedCourses.filter(function(e) {
+            if(item[0] != e[0]) {
+                return true;
+            }
+        });
+    }
 
 }
 
