@@ -4,6 +4,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Elective Recommendation</title>
+	
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="css/home.css">	
 	
 	<script src="js/jquery.js"></script>
@@ -22,6 +24,7 @@
 					<div class="nice-wrap">
 						<input class="nice-textbox" type="text" data-ng-model="homeController.input" data-ng-change="homeController.autoCompleter()"/>
 						<label class="nice-label">Subject</label>
+						<i class="material-icons md-48 done-btn" data-ng-if="homeController.selectedCourses.length == homeController.maxSelectableCourses" data-ng-click="homeController.submitter()">done_outline</i>
 					</div>
 
 					<div class="cards-container">
@@ -38,7 +41,7 @@
 							<div class="card-image">
 								
 							</div>
-							<div class="card-content" data-ng-click="homeController.selectCourse($event, item)">
+							<div class="card-content" data-ng-click="homeController.selectCourse($event, item)" data-ng-class="{'disabled-card': homeController.selectedCourses.length == homeController.maxSelectableCourses}">
 								<h3>{{item[0]}}</h3>
 							</div>
 						</div>

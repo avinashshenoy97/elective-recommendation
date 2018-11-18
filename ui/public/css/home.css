@@ -380,3 +380,17 @@ html, body {
 .dark-card * {
 	color: white !important;
 }
+
+.disabled-card {
+	background-color: gray;
+	cursor: not-allowed;
+}
+
+.done-btn {
+	position: relative;
+	top: -45px;
+	left: 505px;
+	cursor: pointer;
+	color: lawngreen;
+	font-size: 48px;
+}

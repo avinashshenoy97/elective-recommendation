@@ -14,13 +14,17 @@ function HomeService($http) {
                 });
             },
             function error(response) {
-                // ['abc', 'def', 'ghi', 'jkl', 'mno', 'pqr', 'stu'].forEach(element => { //test
-                //     self.autoCompleteList.push([element, false]);
-                // });
+                ['abc', 'def', 'ghi', 'jkl', 'mno', 'pqr', 'stu'].forEach(element => { //test
+                    self.autoCompleteList.push([element, false]);
+                });
                 console.log('Error fetching autocomplete list');
                 console.log(response);
             }
         )
+    };
+
+    self.submitter = function(courses) {
+        self.http.post(self.submitUrl, courses);
     };
 }
 
@@ -34,6 +38,7 @@ function HomeController(loginService, homeService) {
     self.autoCompleteList = [];
 
     self.selectedCourses = [];
+    self.maxSelectableCourses = 3;
 
     self.autoCompleter = function() {
         self.autoCompleteList = [];
@@ -50,8 +55,10 @@ function HomeController(loginService, homeService) {
     };
 
     self.selectCourse = function($event, item) {
-        item[1] = true;
-        self.selectedCourses.push(item);
+        if(self.selectedCourses.length < self.maxSelectableCourses) {
+            item[1] = true;
+            self.selectedCourses.push(item);
+        }
     };
 
     self.unselectCourse = function($event, item) {
@@ -61,6 +68,12 @@ function HomeController(loginService, homeService) {
                 return true;
             }
         });
+    }
+
+    self.submitter = function() {
+        if(self.selectedCourses.length == self.maxSelectableCourses) {
+            self.homeService.submitter(self.selectedCourses);
+        }
     }
 
 }
