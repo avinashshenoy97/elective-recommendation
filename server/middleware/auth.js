@@ -18,8 +18,10 @@ function register(username, password, callback) {
 	authorize(username, password, callback);
 }
 
-function authenticate(username, password) {
+function authenticate(token) {
 	// authentication middleware by checking token
+	let user = jwt.decode(token, secret);
+	return user.username;
 }
 
 function authorize(username, password, callback) {

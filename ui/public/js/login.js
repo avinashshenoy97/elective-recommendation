@@ -9,7 +9,7 @@ function LoginController(loginService) {
     self.confirmPass = '';
 
     self.submitter = function() {
-        self.loginService.login(self.user, self.pass);
+        self.loginService.login(self.user, self.pass, self.confirmPass);
     };
 }
 
@@ -25,15 +25,15 @@ function LoginService($http, $cookies) {
     self.error = false;
     self.errorMessage = '';
 
-    self.login = function(user, pass) {
+    self.login = function(user, pass, confirmPass) {
         self.error = false;
         self.errorMessage = '';
 
-        var loginObj = {'user': user, 'pass': pass};
+        var loginObj = {'user': user, 'pass': pass, isRegistration: !!confirmPass};
         
         self.http.post(self.authUrl, loginObj).then(
             function success(response) {
-                if(response.data == 'invalid') {
+                if(response.data.invalid) {
                     self.error = true;
                     self.errorMessage = 'Invalid username or password!';
                 }
