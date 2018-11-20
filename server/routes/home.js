@@ -15,4 +15,9 @@ homeRouter.get('/', (req, res) => {
 	res.render('home.html');
 });
 
+homeRouter.get('/recommend', (req, res) => {
+	console.log(chalk.green('GET ' + chalk.blue('/recommend')));
+	res.render('recommend.html');
+});
+
 module.exports = homeRouter;
