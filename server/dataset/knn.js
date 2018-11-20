@@ -2,13 +2,12 @@
 
 const knn = require('alike');
 const csv = require('csvtojson');
-const path = require('path');
 
 //let electiveNames = ["Advanced Algorithms", "Big Data"];
 //predict(electiveNames);
 
-function predict(electiveNames) {
-	csv().fromFile('electives.csv').then((data) => {
+function predict(electiveNames, filePath) {
+	csv().fromFile(filePath).then((data) => {
 		let electiveTastes = [];
 		for (let i = 0; i < data.length; i++) {
 			if (electiveNames.indexOf(data[i].Course_name) > -1) {
@@ -26,7 +25,6 @@ function predict(electiveNames) {
 		let predictions = knn(electiveTaste, data, {
 			k: 5
 		});
-		console.log(predictions);
 		return predictions;
 	});
 }
@@ -46,3 +44,5 @@ function getAverage(electiveTastes) {
 		Prerequisites: prerequisiteSum / electiveTastes.length
 	};
 }
+
+module.exports = predict;

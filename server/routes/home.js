@@ -5,6 +5,7 @@ const chalk = require('chalk');
 const auth = require('../middleware/auth');
 const csv = require('csvtojson');
 const path = require('path');
+const predict = require('../dataset/knn');
 let homeRouter = express.Router();
 
 homeRouter.use((req, res, next) => {
@@ -26,6 +27,12 @@ homeRouter.get('/electives', (req, res) => {
 		});
 		res.json(electiveNames);
 	});
+});
+
+homeRouter.post('/predict', (req, res) => {
+	let electiveNames = req.body;
+	let results = predict(electiveNames, path.join(__dirname, '../dataset/electives.csv'));
+	res.json(results);
 });
 
 homeRouter.get('/recommend', (req, res) => {

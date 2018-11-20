@@ -3,6 +3,7 @@ function HomeService($http) {
     self.http = $http;
 
     self.autoCompleteUrl = '/home/electives';
+    self.submitUrl = '/home/predict';
 
     self.autoCompleteList = [];
 
@@ -24,7 +25,13 @@ function HomeService($http) {
     };
 
     self.submitter = function(courses) {
-        self.http.post(self.submitUrl, courses);
+        self.http.post(self.submitUrl, courses.map(course => course[0])).then(
+            function success(response) {
+                console.log(response.data);
+            },
+            function error(response) {
+                console.log(response);
+            });
     };
 }
 
