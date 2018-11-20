@@ -30,9 +30,11 @@ homeRouter.get('/electives', (req, res) => {
 });
 
 homeRouter.post('/predict', (req, res) => {
+	console.log(chalk.cyan('POST ' + chalk.blue('/home/predict')));
 	let electiveNames = req.body;
-	let results = predict(electiveNames, path.join(__dirname, '../dataset/electives.csv'));
-	res.json(results);
+	predict(electiveNames, path.join(__dirname, '../dataset/electives.csv'), (results) => {
+		res.json(results);
+	});
 });
 
 homeRouter.get('/recommend', (req, res) => {

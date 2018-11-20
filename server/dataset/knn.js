@@ -6,7 +6,7 @@ const csv = require('csvtojson');
 //let electiveNames = ["Advanced Algorithms", "Big Data"];
 //predict(electiveNames);
 
-function predict(electiveNames, filePath) {
+function predict(electiveNames, filePath, callback) {
 	csv().fromFile(filePath).then((data) => {
 		let electiveTastes = [];
 		for (let i = 0; i < data.length; i++) {
@@ -25,7 +25,7 @@ function predict(electiveNames, filePath) {
 		let predictions = knn(electiveTaste, data, {
 			k: 5
 		});
-		return predictions;
+		callback(predictions);
 	});
 }
 
