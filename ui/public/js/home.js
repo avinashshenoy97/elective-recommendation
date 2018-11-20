@@ -2,7 +2,7 @@ function HomeService($http) {
     var self = this;
     self.http = $http;
 
-    self.autoCompleteUrl = '/idk';
+    self.autoCompleteUrl = '/home/electives';
 
     self.autoCompleteList = [];
 
