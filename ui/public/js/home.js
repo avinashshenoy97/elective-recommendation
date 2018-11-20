@@ -14,9 +14,9 @@ function HomeService($http) {
                 });
             },
             function error(response) {
-                ['abc', 'def', 'ghi', 'jkl', 'mno', 'pqr', 'stu'].forEach(element => { //test
-                    self.autoCompleteList.push([element, false]);
-                });
+                 ['abc', 'def', 'ghi', 'jkl', 'mno', 'pqr', 'stu'].forEach(element => { //test
+                     self.autoCompleteList.push([element, false]);
+                 });
                 console.log('Error fetching autocomplete list');
                 console.log(response);
             }
