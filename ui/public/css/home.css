@@ -317,7 +317,7 @@ html, body {
 	transform-origin:50% 50%;
 	animation-fill-mode: forwards;
 	background-color: white;
-	height: 100px;
+	height: 60px;
 	width:200px;
 }
 
@@ -393,4 +393,16 @@ html, body {
 	cursor: pointer;
 	color: lawngreen;
 	font-size: 48px;
+}
+
+.logoutBtn {
+	background-color: white;
+	position: absolute;
+	top: 0;
+	right: 0;
+	color: black;
+	cursor: pointer;
+	padding: 5px;
+	border-radius: 10px;
+	font-size: 10px;
 }

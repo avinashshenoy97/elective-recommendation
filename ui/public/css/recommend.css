@@ -1515,102 +1515,45 @@ body {
 
 @import url(https://fonts.googleapis.com/css?family=Noto+Sans);
 
-.recommendations .container {
+.recommendations {
     height: 100vh;
-    display: flex;
-    align-items: center;
-    font-family: "Noto Sans";
-    box-sizing: border-box;
-}
-
-.recommendations .wave-btn {
-    margin-left: auto;
-    margin-right: auto;
-    height: 55px;
-    width: 210px;
-    display: flex;
-    background-color: black;
-    position: relative;
-    cursor: pointer;
-    perspective: 300px;
-}
-
-.recommendations .text {
-    font-size: 25px;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    color: #fff;
-    z-index: 1;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: -5px;
-    padding-top: 8px;
     text-align: center;
-    box-sizing: border-box;
-    transition: all 0.3s;
-    transition-timing-function: ease-in;
+    padding: 15%;
 }
 
-.recommendations .panel {
-    position: absolute;  
+.text {
+    color: white;
+    font-family: "Noto Sans";
+    /* padding: 5px; */
+    margin: 25px;
+    transition: 500ms all ease-in;
+    -webkit-transition: 500ms all ease-in;
+    -o-transition: 500ms all ease-in;
+    -moz-transition: 500ms all ease-in;
 }
 
-.recommendations .panel-front {
-    border: solid 2px #FFF;
-    width: 100%;
-    height: 100%;
+.recommendations .container {
+    border: 1px solid whitesmoke;
+    border-radius: 5px;
+    margin: 20px;
+    transition: 500ms all ease-in;
+    -webkit-transition: 500ms all ease-in;
+    -o-transition: 500ms all ease-in;
+    -moz-transition: 500ms all ease-in;
 }
 
-.recommendations .panel-back {
-    width: 173px;
-    border: solid 2px #fff;
-    height: 45px;
-    left: 18px;
-    bottom: 20px;
-    z-index: 0;
+.recommendations .container:hover {
+    transform: scale(1.1);
+    background-color: whitesmoke;
+    color: black !important;
+    cursor: pointer;
 }
 
-.recommendations .panel-angle-base {
-    bottom: -21px;
+.recommendations .container:hover .text {
+    color: black;
 }
 
-.recommendations .panel-angle-rise {
-    bottom: -21px;
-    background-color: #FFF;
-}
-
-.recommendations .panel-front-riser {
-    width: 100%;
-    height: 0px;
-    background-color: #FFF;
-    border: solid 2px #FFF;
-    bottom: -4px;
-    transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
-}
-
-.recommendations .wave-btn:hover > .panel-front-riser {
-    height: 54px;
-}
-
-.recommendations .wave-btn:hover > .panel-angle-rise {
-    bottom: 32px;
-}
-
-.recommendations .wave-btn:hover > .text {
-    color: #2bd4fd;
-}
-
-.recommendations .panel-angle-top {
-    bottom: 32px;
-}
-
-.recommendations .panel-angle {
-    border: solid 3px #FFF;
-    transform: rotateX(70deg);
-    width: 188px;
-    left: 10px;
-    height: 100%;
-    transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+.text:hover {
+    color: black !important;
+    cursor: pointer;
 }

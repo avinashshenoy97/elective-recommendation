@@ -38,6 +38,7 @@ function LoginService($http, $cookies) {
                     self.errorMessage = 'Invalid username or password!';
                 }
                 else {
+                    self.cookieService.put('authToken', )
                     $('form').fadeOut(500);
                     $('.wrapper').addClass('form-success');
                     setTimeout(function() {
@@ -54,6 +55,6 @@ function LoginService($http, $cookies) {
     };
 }
 
-var app = angular.module('loginApp', []);
-app.service('LoginService', ['$http', LoginService]);
+var app = angular.module('loginApp', ['ngCookies']);
+app.service('LoginService', ['$http', '$cookies', LoginService]);
 app.controller('LoginController', ['LoginService', LoginController]);

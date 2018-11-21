@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const chalk = require('chalk');
 const path = require('path');
 const requireDir = require('require-dir');
+const auth = require('./middleware/auth');
 const routes = requireDir('./routes');
 
 let app = express();
@@ -22,7 +23,14 @@ app.set('view engine', 'html');
 
 app.get('/', (req, res) => {
 	console.log(chalk.green('GET ' + chalk.blue('/')));
-	res.render('index.html');
+	console.log(req.cookies);
+	if(req.cookies === undefined || req.cookies['elective'] === undefined) {
+		res.render('index.html');
+	}
+	else if(auth.authenticate(req.cookies['elective'])) {
+		res.redirect('/home');
+	}
+	// res.render('index.html');
 });
 
 for (let route in routes)

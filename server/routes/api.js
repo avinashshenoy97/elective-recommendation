@@ -32,4 +32,6 @@ apiRouter.post('/auth', (req, res) => {
 	}
 });
 
+// apiRouter.get('/getSubjects')
+
 module.exports = apiRouter;

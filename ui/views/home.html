@@ -10,6 +10,7 @@
 	
 	<script src="js/jquery.js"></script>
 	<script  src="js/angular.js"></script>
+	<script  src="/js/angular-cookies.min.js"></script>
 	
 	<script src="js/login.js"></script>
 	<script src="js/home.js"></script>
@@ -19,6 +20,9 @@
 	<div>
 		<div class="wrapper">
 			<div data-ng-controller="HomeController as homeController">
+				<div class="logoutBtn" data-ng-click="homeController.logout()">
+					LOGOUT
+				</div>
 				<div class="textContainer">
 					<h1>Enter Subject</h1>
 					<div class="nice-wrap">

@@ -1,6 +1,7 @@
-function HomeService($http) {
+function HomeService($http, $cookies) {
     var self = this;
     self.http = $http;
+    self.cookieService = $cookies;
 
     self.autoCompleteUrl = '/home/electives';
     self.submitUrl = '/home/predict';
@@ -15,9 +16,9 @@ function HomeService($http) {
                 });
             },
             function error(response) {
-                 ['abc', 'def', 'ghi', 'jkl', 'mno', 'pqr', 'stu'].forEach(element => { //test
-                     self.autoCompleteList.push([element, false]);
-                 });
+                //  ['abc', 'def', 'ghi', 'jkl', 'mno', 'pqr', 'stu'].forEach(element => { //test
+                //      self.autoCompleteList.push([element, false]);
+                //  });
                 console.log('Error fetching autocomplete list');
                 console.log(response);
             }
@@ -28,6 +29,8 @@ function HomeService($http) {
         self.http.post(self.submitUrl, courses.map(course => course[0])).then(
             function success(response) {
                 console.log(response.data);
+                self.cookieService.put('results', JSON.stringify(response.data));
+                window.location.pathname = '/home/recommend';
             },
             function error(response) {
                 console.log(response);
@@ -89,9 +92,9 @@ function HomeController(loginService, homeService) {
 
 }
 
-var app = angular.module('homeApp', []);
+var app = angular.module('homeApp', ['ngCookies']);
 app.service('LoginService', ['$http', LoginService]);
-app.service('HomeService', ['$http', HomeService]);
+app.service('HomeService', ['$http', '$cookies', HomeService]);
 app.controller('HomeController', ['LoginService', 'HomeService', HomeController]);
 
 $(document).ready(function(){
