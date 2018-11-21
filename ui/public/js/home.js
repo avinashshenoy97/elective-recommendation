@@ -76,6 +76,10 @@ function HomeController(loginService, homeService) {
         }
     }
 
+    self.logout = function(){ 
+        window.location.pathname = '/logout'; 
+    }
+
 }
 
 var app = angular.module('homeApp', []);

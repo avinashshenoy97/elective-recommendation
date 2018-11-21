@@ -12,6 +12,13 @@ homeRouter.use((req, res, next) => {
 
 homeRouter.get('/', (req, res) => {
 	console.log(chalk.green('GET ' + chalk.blue('/home')));
+	console.log(req.cookies);
+	if(req.cookies === undefined || req.cookies['elective'] === undefined) {
+		res.redirect('/');
+	}
+	else if(!auth.authenticate(req.cookies['elective'])) {
+		res.redirect('/');
+	}
 	res.render('home.html');
 });
 
