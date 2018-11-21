@@ -1,11 +1,10 @@
-function RecommendationService($http, $cookies) {
+function RecommendationService($http) {
     var self = this;
 
     self.http = $http;
-    self.cookieService = $cookies;
 
     self.getRecommendations = function() {
-        return self.cookieService.get('results');
+        return window.localStorage.getItem('results');
     }
 }
 
@@ -15,6 +14,9 @@ function RecommendationController(recommendationService) {
     self.recommendationService = recommendationService;
 
     self.recommendations = JSON.parse(self.recommendationService.getRecommendations());
+    if(self.recommendations === null || self.recommendations.length == 0) {
+        window.location.pathname = '/';
+    }
     console.log(self.recommendations)
 
     self.getRecommendations = function() {
@@ -22,6 +24,6 @@ function RecommendationController(recommendationService) {
     }
 }
 
-var app = angular.module('recommendationApp', ['ngCookies'])
-            .service('RecommendationService', ['$http', '$cookies', RecommendationService])
+var app = angular.module('recommendationApp', [])
+            .service('RecommendationService', ['$http', RecommendationService])
             .controller('RecommendationController', ['RecommendationService', RecommendationController]);

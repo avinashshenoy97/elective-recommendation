@@ -1,7 +1,6 @@
-function HomeService($http, $cookies) {
+function HomeService($http) {
     var self = this;
     self.http = $http;
-    self.cookieService = $cookies;
 
     self.autoCompleteUrl = '/home/electives';
     self.submitUrl = '/home/predict';
@@ -29,7 +28,7 @@ function HomeService($http, $cookies) {
         self.http.post(self.submitUrl, courses.map(course => course[0])).then(
             function success(response) {
                 console.log(response.data);
-                self.cookieService.put('results', JSON.stringify(response.data));
+                window.localStorage.setItem('results', JSON.stringify(response.data));
                 window.location.pathname = '/home/recommend';
             },
             function error(response) {
@@ -53,9 +52,9 @@ function HomeController(loginService, homeService) {
     self.autoCompleter = function() {
         self.autoCompleteList = [];
 
-        // if(self.input.length == 0) {
-        //     return;
-        // }
+        if(self.input.length == 0) {
+            return;
+        }
 
         self.homeService.autoCompleteList.forEach(element => {
             if(element[0].match(self.input)) {
@@ -92,9 +91,9 @@ function HomeController(loginService, homeService) {
 
 }
 
-var app = angular.module('homeApp', ['ngCookies']);
+var app = angular.module('homeApp', []);
 app.service('LoginService', ['$http', LoginService]);
-app.service('HomeService', ['$http', '$cookies', HomeService]);
+app.service('HomeService', ['$http', HomeService]);
 app.controller('HomeController', ['LoginService', 'HomeService', HomeController]);
 
 $(document).ready(function(){
