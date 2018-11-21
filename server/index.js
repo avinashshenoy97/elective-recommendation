@@ -21,17 +21,15 @@ app.set('views', path.join(__dirname, '../ui/views'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 
-app.get('/', (req, res) => {
-	console.log(chalk.green('GET ' + chalk.blue('/')));
-	console.log(req.cookies);
-	if(req.cookies === undefined || req.cookies['elective'] === undefined) {
+app.get('/', (req, res, next) => {
+		if (req.cookies && req.cookies.elective && auth.authenticate(req.cookies.elective))
+			return res.redirect('/home');
+		next();
+	},
+	(req, res) => {
+		console.log(chalk.green('GET ' + chalk.blue('/')));
 		res.render('index.html');
-	}
-	else if(auth.authenticate(req.cookies['elective'])) {
-		res.redirect('/home');
-	}
-	// res.render('index.html');
-});
+	});
 
 for (let route in routes)
 	app.use('/' + route, routes[route]);
