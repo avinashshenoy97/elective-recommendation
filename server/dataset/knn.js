@@ -22,10 +22,35 @@ function predict(electiveNames, filePath, callback) {
 		let electiveTaste = getAverage(electiveTastes);
 		console.log(electiveTaste);
 		// can put weights too, right now it's equally weighted
-		let predictions = knn(electiveTaste, data, {
-			k: 5
-		});
-		callback(predictions);
+		let requiredPredictions = [0, 0];
+		let k = 2;
+		while(true) {
+			let predictions = knn(electiveTaste, data, {
+				k: k
+			});
+
+			predictions.forEach((p) => {
+				if(p['Elective_no'] == 5) {
+					if(requiredPredictions[0] == 0) {
+						requiredPredictions[0] = p;
+					}
+				}
+				else if(p['Elective_no'] == 6) {
+					if(requiredPredictions[1] == 0) {
+						requiredPredictions[1] = p;
+					}
+				}
+			});
+			// oh well
+			if(!(requiredPredictions[0] == 0 || requiredPredictions[1] == 0)) {
+				break;
+			}
+			else {
+				k += 1;
+			}
+		}
+		
+		callback(requiredPredictions);
 	});
 }
 

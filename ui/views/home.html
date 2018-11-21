@@ -20,7 +20,10 @@
 	<div>
 		<div class="wrapper">
 			<div data-ng-controller="HomeController as homeController">
-				<div class="logoutBtn" data-ng-click="homeController.logout()">
+				<div class="logoutBtn" onclick="(function() {window.location.pathname = '/home/recommend';})()" style="left: 0; right: initial;">
+					VIEW OLD RECOMMENDATIONS
+				</div>
+				<div class="logoutBtn" onclick="(function() {window.location.pathname = '/logout';})()">
 					LOGOUT
 				</div>
 				<div class="textContainer">
@@ -29,6 +32,7 @@
 						<input class="nice-textbox" type="text" data-ng-model="homeController.input" data-ng-change="homeController.autoCompleter()"/>
 						<label class="nice-label">Subject</label>
 						<i class="material-icons md-48 done-btn" data-ng-if="homeController.selectedCourses.length == homeController.maxSelectableCourses" data-ng-click="homeController.submitter()">done_outline</i>
+						<!-- <span class="done-btn" data-ng-if="homeController.selectedCourses.length == homeController.maxSelectableCourses" data-ng-click="homeController.submitter()">PROCEED</span> -->
 					</div>
 
 					<div class="cards-container">

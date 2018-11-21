@@ -388,11 +388,14 @@ html, body {
 
 .done-btn {
 	position: relative;
-	top: -45px;
-	left: 505px;
-	cursor: pointer;
-	color: lawngreen;
-	font-size: 48px;
+    top: -48px;
+    left: 505px;
+    cursor: pointer;
+    color: limegreen;
+    font-size: 40px;
+    background: whitesmoke;
+	padding: 5px;
+	border-radius: 10px;
 }
 
 .logoutBtn {
@@ -405,4 +408,6 @@ html, body {
 	padding: 5px;
 	border-radius: 10px;
 	font-size: 10px;
+	font-family: 'Arial', sans-serif;
+	margin: 5px;
 }

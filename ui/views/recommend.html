@@ -318,6 +318,14 @@
             </div>
         </div>
     </div>
+
+    <div class="logoutBtn" onclick="(function() {window.location.pathname = '/logout';})()">
+        LOGOUT
+    </div>
+
+    <div class="logoutBtn" onclick="(function() {window.location.pathname = '/home';})()" style="left: 0; right: initial;">
+        GO BACK
+    </div>
     
     <div class="recommendations" data-ng-controller="RecommendationController as recommendationController">
         <div class="container" data-ng-repeat="item in recommendationController.recommendations">

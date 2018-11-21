@@ -1557,3 +1557,17 @@ body {
     color: black !important;
     cursor: pointer;
 }
+
+.logoutBtn {
+	background-color: white;
+	position: absolute;
+	top: 0;
+	right: 0;
+	color: black;
+	cursor: pointer;
+	padding: 5px;
+	border-radius: 10px;
+    font-size: 10px;
+    font-family: 'Arial', sans-serif;
+    margin: 5px;
+}
