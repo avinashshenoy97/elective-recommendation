@@ -3,6 +3,9 @@
 const express = require('express');
 const chalk = require('chalk');
 const auth = require('../middleware/auth');
+const csv = require('csvtojson');
+const path = require('path');
+const predict = require('../dataset/knn');
 let homeRouter = express.Router();
 
 homeRouter.use((req, res, next) => {
@@ -22,8 +25,27 @@ homeRouter.get('/', (req, res) => {
 	res.render('home.html');
 });
 
+homeRouter.get('/electives', (req, res) => {
+	console.log(chalk.green('GET ' + chalk.blue('/home/electives')));
+	csv().fromFile(path.join(__dirname, '../dataset/electiveData.csv')).then((data) => {
+		let electiveNames = [];
+		data.forEach((row) => {
+			electiveNames.push(row.Course_name);
+		});
+		res.json(electiveNames);
+	});
+});
+
+homeRouter.post('/predict', (req, res) => {
+	console.log(chalk.cyan('POST ' + chalk.blue('/home/predict')));
+	let electiveNames = req.body;
+	predict(electiveNames, path.join(__dirname, '../dataset/electives.csv'), (results) => {
+		res.json(results);
+	});
+});
+
 homeRouter.get('/recommend', (req, res) => {
-	console.log(chalk.green('GET ' + chalk.blue('/recommend')));
+	console.log(chalk.green('GET ' + chalk.blue('/home/recommend')));
 	res.render('recommend.html');
 });
 

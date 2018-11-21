@@ -1,7 +1,7 @@
 'use strict';
 
-const csvFile = 'electiveData.csv';
 const csv = require('csvtojson');
+const jsonToCSV = require('json-to-csv');
 
 // all the various categories
 let teachers = [
@@ -26,7 +26,7 @@ let prerequisites = [
 	['Not Applicable']
 ];
 
-csv().fromFile(csvFile).then((data) => {
+csv().fromFile('electiveData.csv').then((data) => {
 	// transforming to categorical data
 	data.forEach((row) => {
 		for (let i = 0; i < teachers.length; i++) {
@@ -48,5 +48,5 @@ csv().fromFile(csvFile).then((data) => {
 			}
 		}
 	});
-	console.log(data);
+	jsonToCSV(data, 'electives.csv').then(() => console.log('Successful!')).catch((err) => console.log(err));
 });
