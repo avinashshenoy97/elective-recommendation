@@ -47,7 +47,7 @@ function HomeController(loginService, homeService) {
     self.autoCompleteList = [];
 
     self.selectedCourses = [];
-    self.maxSelectableCourses = 3;
+    self.maxSelectableCourses = 4;
 
     self.autoCompleter = function() {
         self.autoCompleteList = [];
@@ -57,7 +57,7 @@ function HomeController(loginService, homeService) {
         }
 
         self.homeService.autoCompleteList.forEach(element => {
-            if(element[0].match(self.input)) {
+            if(element[0].toLocaleLowerCase().match(self.input.toLocaleLowerCase())) {
                 self.autoCompleteList.push(element);
             }
         });
@@ -68,6 +68,11 @@ function HomeController(loginService, homeService) {
             item[1] = true;
             self.selectedCourses.push(item);
         }
+
+        // self.input = '';
+        $('input')[0].focus();
+        $('input')[0].selectionStart = 0;
+        $('input')[0].selectionEnd = self.input.length;
     };
 
     self.unselectCourse = function($event, item) {

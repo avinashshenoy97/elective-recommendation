@@ -21,7 +21,12 @@ function RecommendationController(recommendationService) {
 
     self.getRecommendations = function() {
         return self.recommendations;
-    }
+    };
+
+    self.clear = function() {
+        window.localStorage.removeItem('results');
+        window.location.pathname = '/home';
+    };
 }
 
 var app = angular.module('recommendationApp', [])

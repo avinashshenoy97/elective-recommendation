@@ -328,6 +328,9 @@
     </div>
     
     <div class="recommendations" data-ng-controller="RecommendationController as recommendationController">
+            <div class="logoutBtn" data-ng-click="recommendationController.clear()" style="left: 0; right: 0; margin: 5px auto;">
+                CLEAR
+            </div>
         <div class="container" data-ng-repeat="item in recommendationController.recommendations">
             <div class="text">{{item.Course_name}}</div>
         </div>

@@ -1570,4 +1570,5 @@ body {
     font-size: 10px;
     font-family: 'Arial', sans-serif;
     margin: 5px;
+    max-width: 50px;
 }
