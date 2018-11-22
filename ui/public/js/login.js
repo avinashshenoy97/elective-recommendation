@@ -38,7 +38,6 @@ function LoginService($http, $cookies) {
                     self.errorMessage = 'Invalid username or password!';
                 }
                 else {
-                    self.cookieService.put('authToken', )
                     $('form').fadeOut(500);
                     $('.wrapper').addClass('form-success');
                     setTimeout(function() {

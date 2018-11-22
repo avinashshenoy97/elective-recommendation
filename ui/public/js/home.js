@@ -2,26 +2,13 @@ function HomeService($http) {
     var self = this;
     self.http = $http;
 
-    self.autoCompleteUrl = '/home/electives';
+    self.autoCompleteUrl = '/home/electives?semester=';
     self.submitUrl = '/home/predict';
 
     self.autoCompleteList = [];
 
-    self.getAutoCompleteList = function() {
-        self.http.get(self.autoCompleteUrl).then(
-            function success(response) {
-                response.data.forEach(element => {
-                    self.autoCompleteList.push([element, false]);
-                });
-            },
-            function error(response) {
-                //  ['abc', 'def', 'ghi', 'jkl', 'mno', 'pqr', 'stu'].forEach(element => { //test
-                //      self.autoCompleteList.push([element, false]);
-                //  });
-                console.log('Error fetching autocomplete list');
-                console.log(response);
-            }
-        )
+    self.getAutoCompleteList = function(semester) {
+        return self.http.get(self.autoCompleteUrl + encodeURIComponent(semester));
     };
 
     self.submitter = function(courses) {
@@ -42,41 +29,98 @@ function HomeController(loginService, homeService) {
     self.homeService = homeService;
     self.loginService = loginService;
 
-    self.homeService.getAutoCompleteList();
+    self.semester = 1;
+
     self.input = '';
+    self.dispAutoCompleteList = [];
     self.autoCompleteList = [];
+    self.fullAutoCompleteList = [0, 0, 0, 0];
 
     self.selectedCourses = [];
-    self.maxSelectableCourses = 4;
+    self.maxSelectableCourses = [2, 4];
 
-    self.autoCompleter = function() {
-        self.autoCompleteList = [];
+    self.changeSemester = function(dir) {
+        switch(dir) {
+            case 'dec':
+                if(self.semester > 1) {
+                    self.semester -= 1;
+                }
+                break;
 
-        if(self.input.length == 0) {
+            case 'inc':
+                if(self.semester < self.maxSelectableCourses[self.maxSelectableCourses.length-1]) {
+                    self.semester += 1;
+                }
+                break;
+        }
+    }
+
+    self.getAutoCompleteList = function() {
+        if(self.semester > self.maxSelectableCourses[self.maxSelectableCourses.length-1]) {
+            return;
+        }
+        
+        if(self.fullAutoCompleteList[window.parseInt(self.semester)-1] != 0) {
+            self.autoCompleteList = self.fullAutoCompleteList[window.parseInt(self.semester)-1];
+            self.dispAutoCompleteList = self.autoCompleteList;
             return;
         }
 
-        self.homeService.autoCompleteList.forEach(element => {
+        self.homeService.getAutoCompleteList(self.semester).then(
+            function success(response) {
+                self.autoCompleteList = [];
+                response.data.list.forEach(element => {
+                    self.autoCompleteList.push([element, false]);
+                });
+                if(response.data.semester && self.fullAutoCompleteList[window.parseInt(response.data.semester)-1] == 0) {
+                    self.fullAutoCompleteList[window.parseInt(response.data.semester)-1] = self.autoCompleteList;
+                }
+                self.dispAutoCompleteList = self.autoCompleteList;
+            },
+            function error(response) {
+                //  ['abc', 'def', 'ghi', 'jkl', 'mno', 'pqr', 'stu'].forEach(element => { //test
+                //      self.autoCompleteList.push([element, false]);
+                //  });
+                console.log('Error fetching autocomplete list');
+                console.log(response);
+            }
+        );
+    };
+
+    self.autoCompleter = function() {
+        self.dispAutoCompleteList = [];
+
+        // if(self.input.length == 0) {
+        //     return;
+        // }
+
+        self.autoCompleteList.forEach(element => {
             if(element[0].toLocaleLowerCase().match(self.input.toLocaleLowerCase())) {
-                self.autoCompleteList.push(element);
+                self.dispAutoCompleteList.push(element);
             }
         });
     };
 
     self.selectCourse = function($event, item) {
-        if(self.selectedCourses.length < self.maxSelectableCourses) {
+        if(self.selectedCourses.length < self.maxSelectableCourses[self.maxSelectableCourses.length-1]) {
             item[1] = true;
             self.selectedCourses.push(item);
+            self.changeSemester('inc');
+            self.getAutoCompleteList();
         }
 
-        // self.input = '';
+        self.input = '';
         $('input')[0].focus();
-        $('input')[0].selectionStart = 0;
-        $('input')[0].selectionEnd = self.input.length;
+        self.autoCompleter();
+        // $('input')[0].selectionStart = 0;
+        // $('input')[0].selectionEnd = self.input.length;
     };
 
     self.unselectCourse = function($event, item) {
         item[1] = false;
+        self.changeSemester('dec');
+        self.getAutoCompleteList();
+        self.autoCompleter();
         self.selectedCourses = self.selectedCourses.filter(function(e) {
             if(item[0] != e[0]) {
                 return true;
@@ -85,10 +129,17 @@ function HomeController(loginService, homeService) {
     }
 
     self.submitter = function() {
-        if(self.selectedCourses.length == self.maxSelectableCourses) {
+        if(self.maxSelectableCourses.includes(self.selectedCourses.length)) {
             self.homeService.submitter(self.selectedCourses);
         }
+        else {
+            console.log('Error! Trying to submit too few courses!');
+        }
     }
+
+    self.submitable = function() {
+        return self.maxSelectableCourses.includes(self.selectedCourses.length);
+    };
 
     self.logout = function(){ 
         window.location.pathname = '/logout'; 

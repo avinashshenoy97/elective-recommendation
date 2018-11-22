@@ -24,13 +24,29 @@ homeRouter.get('/', (req, res) => {
 });
 
 homeRouter.get('/electives', (req, res) => {
-	console.log(chalk.green('GET ' + chalk.blue('/home/electives')));
+	console.log(chalk.green('GET ' + chalk.blue('/home/electives?semester=' + req.query.semester)));
 	csv().fromFile(path.join(__dirname, '../dataset/electiveData.csv')).then((data) => {
 		let electiveNames = [];
-		data.forEach((row) => {
-			electiveNames.push(row.Course_name);
-		});
-		res.json(electiveNames);
+		let check = false;
+		if(req.query.semester !== undefined) {
+			check = req.query.semester;
+		}
+		console.log(check)
+		console.log(electiveNames)
+		if(check) {
+			data.forEach((row) => {
+				if(row.Elective_no == check) {
+					electiveNames.push(row.Course_name);
+				}
+			});
+		}
+		else {
+			data.forEach((row) => {
+				electiveNames.push(row.Course_name);
+			});
+		}
+		console.log(electiveNames)
+		res.json({semester: check, list: electiveNames});
 	});
 });
 

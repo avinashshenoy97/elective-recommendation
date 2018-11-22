@@ -19,7 +19,7 @@
 <body data-ng-app="homeApp">
 	<div>
 		<div class="wrapper">
-			<div data-ng-controller="HomeController as homeController">
+			<div data-ng-controller="HomeController as homeController" data-ng-init="homeController.getAutoCompleteList()">
 				<div class="logoutBtn" onclick="(function() {window.location.pathname = '/home/recommend';})()" style="left: 0; right: initial;">
 					VIEW OLD RECOMMENDATIONS
 				</div>
@@ -31,7 +31,7 @@
 					<div class="nice-wrap">
 						<input class="nice-textbox" type="text" data-ng-model="homeController.input" data-ng-change="homeController.autoCompleter()"/>
 						<label class="nice-label">Subject</label>
-						<i class="material-icons md-48 done-btn" data-ng-if="homeController.selectedCourses.length == homeController.maxSelectableCourses" data-ng-click="homeController.submitter()">done_outline</i>
+						<i class="material-icons md-48 done-btn" data-ng-if="homeController.submitable()" data-ng-click="homeController.submitter()">done_outline</i>
 						<!-- <span class="done-btn" data-ng-if="homeController.selectedCourses.length == homeController.maxSelectableCourses" data-ng-click="homeController.submitter()">PROCEED</span> -->
 					</div>
 
@@ -45,11 +45,11 @@
 
 					<div class="cards-container">
 						
-						<div class="card-wrapper" data-ng-repeat="item in homeController.autoCompleteList track by $index" data-ng-if="!item[1]">
+						<div class="card-wrapper" data-ng-repeat="item in homeController.dispAutoCompleteList track by $index" data-ng-if="!item[1]">
 							<div class="card-image">
 								
 							</div>
-							<div class="card-content" data-ng-click="homeController.selectCourse($event, item)" data-ng-class="{'disabled-card': homeController.selectedCourses.length == homeController.maxSelectableCourses}">
+							<div class="card-content" data-ng-click="homeController.selectCourse($event, item)" data-ng-class="{'disabled-card': homeController.selectedCourses.length == homeController.maxSelectableCourses[homeController.maxSelectableCourses.length-1]}">
 								<h3>{{item[0]}}</h3>
 							</div>
 						</div>
