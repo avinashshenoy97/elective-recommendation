@@ -5,7 +5,7 @@ const chalk = require('chalk');
 const auth = require('../middleware/auth');
 const csv = require('csvtojson');
 const path = require('path');
-const predict = require('../dataset/knn');
+const predict = require('../dataset/dt');
 let homeRouter = express.Router();
 
 homeRouter.use((req, res, next) => {
@@ -36,9 +36,22 @@ homeRouter.get('/electives', (req, res) => {
 
 homeRouter.post('/predict', (req, res) => {
 	console.log(chalk.cyan('POST ' + chalk.blue('/home/predict')));
-	let electiveNames = req.body;
-	predict(electiveNames, path.join(__dirname, '../dataset/electives.csv'), (results) => {
-		res.json(results);
+	let electiveNames = [];
+	req.body.forEach((elective) => {
+		electiveNames.push(elective.split(' ').map(electiveWord => electiveWord[0]).join(''));
+	});
+	predict(electiveNames, path.join(__dirname, '../dataset/data.csv'), (predictedClasses) => {
+		csv().fromFile(path.join(__dirname, '../dataset/electiveData.csv')).then((data) => {
+			let results = [];
+			for (let i = 0; i < data.length; i++) {
+				let abbreviatedForm = data[i].Course_name.split(' ').map(word => word[0]).join('');
+				if (abbreviatedForm == predictedClasses[0]) results.push(data[i]);
+				else if (abbreviatedForm == predictedClasses[1]) results.push(data[i]);
+				if (results.length == 2) break;
+			}
+			console.log(results);
+			res.json(results);
+		});
 	});
 });
 
