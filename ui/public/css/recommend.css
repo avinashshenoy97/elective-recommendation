@@ -1590,3 +1590,7 @@ body {
     color: white;
     font-family: "Noto Sans";
 }
+
+.card-description span {
+    display: block;
+}

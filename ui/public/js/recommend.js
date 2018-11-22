@@ -16,6 +16,8 @@ function RecommendationController(recommendationService) {
     self.descriptionDisplay = false;
     self.description = '';
     self.teacher = '';
+    self.specialization = '';
+    self.prerequisites = '';
 
     self.recommendations = JSON.parse(self.recommendationService.getRecommendations());
     if(self.recommendations === null || self.recommendations.length == 0) {
@@ -31,6 +33,8 @@ function RecommendationController(recommendationService) {
         self.descriptionDisplay = true;
         self.description = item.Description;
         self.teacher = item.Teacher;
+        self.specialization = item.Specialization;
+        self.prerequisites = item.Prerequisites;
     };
 
     self.disableDescription = function() {
