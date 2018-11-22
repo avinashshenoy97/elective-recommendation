@@ -21,13 +21,13 @@ sem,short,long,subjectCode
 4,SWT,Semantic Web Technologies,UE15CS345
 4,SMS,System Modelling and Simulation,UE15CS346
 4,DIP,Digital Image Processing,UE15CS348
-5,AIR,,
-5,AML,,
-6,AMR,,
-5,CM,,
-6,DP,,
-5,ERP,,
-6,IS,,
-6,SNA,,
-5,WNC,,
-6,WS,,
+5,AIR,Algorithms for Information Retrieval,
+5,AML,Advanced Machine Learning,
+6,AMR,Autonomous Mobile Robotics,
+5,CM,Content Management,
+6,DP,Design Patterns,
+5,ERP,Enterprise Resource Planning,
+6,IS,Information Security,
+6,SNA,Social Network Analytics,
+5,WNC,Wireless Network Communications,
+6,WS,Web Services,
