@@ -331,8 +331,12 @@
             <div class="logoutBtn" data-ng-click="recommendationController.clear()" style="left: 0; right: 0; margin: 5px auto;">
                 CLEAR
             </div>
-        <div class="container" data-ng-repeat="item in recommendationController.recommendations">
+        <div class="container" data-ng-repeat="item in recommendationController.recommendations" data-ng-mouseover="recommendationController.enableDescription(item)" data-ng-mouseout="recommendationController.disableDescription()">
             <div class="text">{{item.Course_name}}</div>
+        </div>
+        <div class="card-description" data-ng-if="recommendationController.descriptionDisplay">
+            <h3>Taught By: {{recommendationController.teacher}}</h3>
+            <span>{{recommendationController.description}}</span>
         </div>
     </div>
     

@@ -32,6 +32,8 @@ function HomeController(loginService, homeService) {
     self.semester = 1;
 
     self.input = '';
+    self.descriptionDisplay = false;
+    self.description = '';
     self.dispAutoCompleteList = [];
     self.autoCompleteList = [];
     self.fullAutoCompleteList = [0, 0, 0, 0];
@@ -70,7 +72,7 @@ function HomeController(loginService, homeService) {
             function success(response) {
                 self.autoCompleteList = [];
                 response.data.list.forEach(element => {
-                    self.autoCompleteList.push([element, false]);
+                    self.autoCompleteList.push([element[0], false, element[1], false]);
                 });
                 if(response.data.semester && self.fullAutoCompleteList[window.parseInt(response.data.semester)-1] == 0) {
                     self.fullAutoCompleteList[window.parseInt(response.data.semester)-1] = self.autoCompleteList;
@@ -112,6 +114,7 @@ function HomeController(loginService, homeService) {
         self.input = '';
         $('input')[0].focus();
         self.autoCompleter();
+        // self.toggleDescription(item);
         // $('input')[0].selectionStart = 0;
         // $('input')[0].selectionEnd = self.input.length;
     };
@@ -121,11 +124,21 @@ function HomeController(loginService, homeService) {
         self.changeSemester('dec');
         self.getAutoCompleteList();
         self.autoCompleter();
+        // self.toggleDescription(item);
         self.selectedCourses = self.selectedCourses.filter(function(e) {
             if(item[0] != e[0]) {
                 return true;
             }
         });
+    };
+
+    self.enableDescription = function(item) {
+        self.descriptionDisplay = true;
+        self.description = item[2];
+    };
+
+    self.disableDescription = function() {
+        self.descriptionDisplay = false;
     }
 
     self.submitter = function() {
@@ -135,7 +148,7 @@ function HomeController(loginService, homeService) {
         else {
             console.log('Error! Trying to submit too few courses!');
         }
-    }
+    };
 
     self.submitable = function() {
         return self.maxSelectableCourses.includes(self.selectedCourses.length);

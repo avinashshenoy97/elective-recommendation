@@ -374,7 +374,7 @@ html, body {
 .dark-card {
 	background-color: rgba(0,0,0,0.9);
 	color: white !important;
-	height: 50px;
+	height: 60px;
 }
 
 .dark-card * {
@@ -410,4 +410,20 @@ html, body {
 	font-size: 10px;
 	font-family: 'Arial', sans-serif;
 	margin: 5px;
+}
+
+.card-description {
+	background-color: rgb(0, 0, 0, 0);
+	border: 1px solid white;
+	margin: 0 auto;
+	width: 80%;
+	height: auto;
+	/* max-height: 15%; */
+	position: absolute;
+	bottom: 10%;
+	left: 0;
+    right: 0;
+    padding: 10px;
+    font-weight: 900;
+    font-size: 20px;
 }

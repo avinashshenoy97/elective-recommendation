@@ -1,0 +1,33 @@
+sem,short,long,subjectCode
+1,AA,Advanced Algorithms,UE15CS311
+1,ADBMS,Advanced Database Management System,UE15CS313
+1,BD,Big Data,UE15CS314
+1,MC,Multimedia Computing,UE15CS315
+1,XML,XML Technologies,UE15CS316
+2,CG,Computer Graphics and Visualization,UE15CS321
+2,DA,Data Analytics,UE15CS322
+2,FL,Fuzzy Logic,UE15CS323
+2,SC,Numerical Methods/Scientific Computing,UE15CS324
+2,AI,Artificial Intelligence,UE15CS325
+3,CNS,Computer Network Security,UE15CS331
+3,SAN,Storage Area Network,UE15CS332
+3,NLP,Natural Language Processing,UE15CS333
+3,HPCA,High Performance Computer Architecture,UE15CS334
+3,ACN,Advanced Computer Networks,UE15CS335
+3,DRONE,,
+3,OR,,
+4,CC,Cloud Computing,UE15CS341
+4,KM,Knowledge Management,UE15CS344
+4,SWT,Semantic Web Technologies,UE15CS345
+4,SMS,System Modelling and Simulation,UE15CS346
+4,DIP,Digital Image Processing,UE15CS348
+5,AIR,,
+5,AML,,
+6,AMR,,
+5,CM,,
+6,DP,,
+5,ERP,,
+6,IS,,
+6,SNA,,
+5,WNC,,
+6,WS,,

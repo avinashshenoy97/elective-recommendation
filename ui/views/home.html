@@ -36,7 +36,7 @@
 					</div>
 
 					<div class="cards-container">
-						<div class="card-wrapper dark-card" data-ng-repeat="item in homeController.selectedCourses track by $index">
+						<div class="card-wrapper dark-card" data-ng-repeat="item in homeController.selectedCourses track by $index" data-ng-mouseover="homeController.enableDescription(item)" data-ng-mouseout="homeController.disableDescription()">
 							<div class="card-content" data-ng-click="homeController.unselectCourse($event, item)">
 								<h3>{{item[0]}}</h3>
 							</div>
@@ -45,7 +45,7 @@
 
 					<div class="cards-container">
 						
-						<div class="card-wrapper" data-ng-repeat="item in homeController.dispAutoCompleteList track by $index" data-ng-if="!item[1]">
+						<div class="card-wrapper" data-ng-repeat="item in homeController.dispAutoCompleteList track by $index" data-ng-if="!item[1]" data-ng-mouseover="homeController.enableDescription(item)" data-ng-mouseout="homeController.disableDescription()">
 							<div class="card-image">
 								
 							</div>
@@ -55,6 +55,9 @@
 						</div>
 						
 					</div>
+				</div>
+				<div class="card-description" data-ng-if="homeController.descriptionDisplay">
+					<h4>{{homeController.description}}</h4>
 				</div>
 			</div>
 			

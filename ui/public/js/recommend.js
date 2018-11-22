@@ -13,6 +13,10 @@ function RecommendationController(recommendationService) {
 
     self.recommendationService = recommendationService;
 
+    self.descriptionDisplay = false;
+    self.description = '';
+    self.teacher = '';
+
     self.recommendations = JSON.parse(self.recommendationService.getRecommendations());
     if(self.recommendations === null || self.recommendations.length == 0) {
         window.location.pathname = '/';
@@ -22,6 +26,16 @@ function RecommendationController(recommendationService) {
     self.getRecommendations = function() {
         return self.recommendations;
     };
+
+    self.enableDescription = function(item) {
+        self.descriptionDisplay = true;
+        self.description = item.Description;
+        self.teacher = item.Teacher;
+    };
+
+    self.disableDescription = function() {
+        self.descriptionDisplay = false;
+    }
 
     self.clear = function() {
         window.localStorage.removeItem('results');
