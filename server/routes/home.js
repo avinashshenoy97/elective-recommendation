@@ -8,6 +8,8 @@ const path = require('path');
 const predict = require('../dataset/dt');
 let homeRouter = express.Router();
 
+let subjectMap = {};
+
 homeRouter.use((req, res, next) => {
 	// supposed to do authentication but what the heck
 	if (req.cookies === undefined || req.cookies['elective'] === undefined) {
@@ -57,14 +59,13 @@ homeRouter.post('/predict', (req, res) => {
 		electiveNames.push(elective.split(' ').map(electiveWord => electiveWord[0]).join(''));
 	});
 	predict(electiveNames, path.join(__dirname, '../dataset/data.csv'), (predictedClasses) => {
-		let subjectMap = {};
 		csv().fromFile(path.join(__dirname, '../dataset/electiveMap.csv')).then((data) => {
 			// console.log(data);
 			for (let i = 0; i < data.length; i++) {
 				subjectMap[data[i].long] = data[i].short;
 			}
 		});
-		console.log(subjectMap);
+		// console.log(subjectMap);
 
 		csv().fromFile(path.join(__dirname, '../dataset/electiveData.csv')).then((data) => {
 			let results = [];

@@ -37,7 +37,7 @@
 
 					<div class="cards-container">
 						<div class="card-wrapper dark-card" data-ng-repeat="item in homeController.selectedCourses track by $index" data-ng-mouseover="homeController.enableDescription(item)" data-ng-mouseout="homeController.disableDescription()">
-							<div class="card-content" data-ng-click="homeController.unselectCourse($event, item)">
+							<div class="card-content" data-ng-click="homeController.unselectCourse($event)">
 								<h3>{{item[0]}}</h3>
 							</div>
 						</div>

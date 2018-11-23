@@ -57,27 +57,40 @@ function HomeController(loginService, homeService) {
         }
     }
 
-    self.getAutoCompleteList = function() {
-        if(self.semester > self.maxSelectableCourses[self.maxSelectableCourses.length-1]) {
+    self.getAutoCompleteList = function(sem) {
+        var semester = 0;
+        if(sem === undefined) {
+            semester = self.semester;
+        }
+        else {
+            semester = sem;
+        }
+        
+        if(semester > self.maxSelectableCourses[self.maxSelectableCourses.length-1]) {
             return;
         }
         
-        if(self.fullAutoCompleteList[window.parseInt(self.semester)-1] != 0) {
-            self.autoCompleteList = self.fullAutoCompleteList[window.parseInt(self.semester)-1];
-            self.dispAutoCompleteList = self.autoCompleteList;
+        if(self.fullAutoCompleteList[window.parseInt(semester)-1] != 0) {
+            if(sem === undefined) {
+                self.autoCompleteList = self.fullAutoCompleteList[window.parseInt(semester)-1];
+                self.dispAutoCompleteList = self.autoCompleteList;
+            }
             return;
         }
 
-        self.homeService.getAutoCompleteList(self.semester).then(
+        self.homeService.getAutoCompleteList(semester).then(
             function success(response) {
-                self.autoCompleteList = [];
+                var autoCompleteList = [];
                 response.data.list.forEach(element => {
-                    self.autoCompleteList.push([element[0], false, element[1], false]);
+                    autoCompleteList.push([element[0], false, element[1], false]);
                 });
-                if(response.data.semester && self.fullAutoCompleteList[window.parseInt(response.data.semester)-1] == 0) {
-                    self.fullAutoCompleteList[window.parseInt(response.data.semester)-1] = self.autoCompleteList;
+                if(sem === undefined) {
+                    self.autoCompleteList = autoCompleteList;
+                    self.dispAutoCompleteList = self.autoCompleteList;
                 }
-                self.dispAutoCompleteList = self.autoCompleteList;
+                if(response.data.semester && self.fullAutoCompleteList[window.parseInt(response.data.semester)-1] == 0) {
+                    self.fullAutoCompleteList[window.parseInt(response.data.semester)-1] = autoCompleteList;
+                }
             },
             function error(response) {
                 //  ['abc', 'def', 'ghi', 'jkl', 'mno', 'pqr', 'stu'].forEach(element => { //test
@@ -90,6 +103,7 @@ function HomeController(loginService, homeService) {
     };
 
     self.autoCompleter = function() {
+        // self.autoCompleteList = self.fullAutoCompleteList[window.parseInt(self.semester)];
         self.dispAutoCompleteList = [];
 
         // if(self.input.length == 0) {
@@ -109,6 +123,7 @@ function HomeController(loginService, homeService) {
             self.selectedCourses.push(item);
             self.changeSemester('inc');
             self.getAutoCompleteList();
+            self.getAutoCompleteList(self.semester+1);
         }
 
         self.input = '';
@@ -119,7 +134,8 @@ function HomeController(loginService, homeService) {
         // $('input')[0].selectionEnd = self.input.length;
     };
 
-    self.unselectCourse = function($event, item) {
+    self.unselectCourse = function($event) {
+        var item = self.selectedCourses[self.selectedCourses.length-1];
         item[1] = false;
         self.changeSemester('dec');
         self.getAutoCompleteList();
